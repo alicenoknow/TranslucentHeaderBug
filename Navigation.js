@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {createStackNavigator} from 'react-navigation-stack';
+import createNativeStackNavigator from 'react-native-screens/createNativeStackNavigator';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
 class SampleScreen extends React.Component {
@@ -31,11 +31,6 @@ class NextScreen extends React.Component {
           }>
           <Text>Add screen</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => this.props.navigation.pop()}>
-          <Text>Remove screen</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -64,7 +59,6 @@ const TabNavigator = createBottomTabNavigator(
             headerStyle: {
               backgroundColor: 'transparent',
             },
-            headerTransparent: true,
             headerTranslucent: true,
           };
       }
@@ -73,10 +67,15 @@ const TabNavigator = createBottomTabNavigator(
   },
 );
 
-export const AppNavigator = createStackNavigator({
-  Tabs: TabNavigator,
-  NextScreen: NextScreen,
-});
+export const AppNavigator = createNativeStackNavigator(
+  {
+    Tabs: TabNavigator,
+    NextScreen: NextScreen,
+  },
+  {
+    initialRouteName: 'Tabs',
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -96,6 +95,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     backgroundColor: 'pink',
-    borderWidth: 1,
   },
 });
